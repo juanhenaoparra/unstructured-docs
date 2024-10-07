@@ -1,0 +1,163 @@
+{
+  "llm_flow_id": "LLM_FLW_01HSEZDCTRGPSX11DDWH21K0XX",
+  "client_id_version": "TCI123:1.0",
+  "client_id": "TCI123",
+  "default_globals": {},
+  "name": "entity_relations_extractor",
+  "starting_state": "extractor",
+  "states": [
+    {
+      "llm_model": "gpt-4o",
+      "outputs": {
+        "override_global": {
+          "{res}": "{self.response.get_nodes_relations}"
+        }
+      },
+      "system_prompt": "# Objective\n\nYou are going to extract the entities and relationships implicit in the Contextual Text. To be able to model it as a property graph.\n\nOptional schema:\n{optional_schema}\n\n---\n# Instructions\n\n1. Include all information, never miss anything.\n2. Try to focus in the optional schema.\n3. Each node or relation can have additional properties that identify that relation.\n4. Use the same language as the contextual text. Have a bias to '{language}'.\n\n---\n\n# Contextual Text\n{extraction}\n",
+      "temperature": 0,
+      "type": "llm",
+      "tool_choice": {
+        "function": {
+          "name": "get_nodes_relations"
+        },
+        "type": "function"
+      },
+      "tools": [
+        {
+          "function": {
+            "description": "To extract the nodes and its relations from the contextual text",
+            "name": "get_nodes_relations",
+            "parameters": {
+              "properties": {
+                "nodes": {
+                  "description": "The list of nodes and its details",
+                  "items": {
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "description": "The node type"
+                      },
+                      "node_id": {
+                        "type": "string",
+                        "description": "The node name in upper case and snake case"
+                      },
+                      "props": {
+                        "description": "The list of properties that can be assigned to the node",
+                        "items": {
+                          "properties": {
+                            "name": {
+                              "description": "The name of the property in lower case and snake case",
+                              "type": "string"
+                            },
+                            "value": {
+                              "description": "The value of the property",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "name",
+                            "value"
+                          ],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "node_id",
+                      "props"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "relations": {
+                  "description": "The list of relations between two nodes",
+                  "items": {
+                    "properties": {
+                      "from_node_id": {
+                        "type": "string",
+                        "description": "The id origin node of the relation"
+                      },
+                      "to_node_id": {
+                        "type": "string",
+                        "description": "The destiny node of the relation"
+                      },
+                      "props": {
+                        "description": "The list of properties that can be assigned to the relation between the two nodes identified",
+                        "items": {
+                          "properties": {
+                            "name": {
+                              "description": "The name of the property in lower case and snake case",
+                              "type": "string"
+                            },
+                            "value": {
+                              "description": "The value of the property",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "name",
+                            "value"
+                          ],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "from_node_id",
+                      "to_node_id",
+                      "props"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "nodes",
+                "relations"
+              ],
+              "type": "object"
+            }
+          },
+          "type": "function"
+        }
+      ],
+      "name": "get_graph",
+      "routes": [
+        {
+          "next_node": "final",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "message",
+      "acceptance_state": true,
+      "message_user_intention": "EXIT",
+      "message": "[DONE]",
+      "name": "final"
+    },
+    {
+      "type": "llm",
+      "system_prompt": "# Objective\n\nYou are going to extract the entities and relationships implicit in the Contextual Text. Use named entity recognition and pattern extraction to do it in a complete way.\n\nOptional schema:\n{optional_schema}\n\n---\n# Instructions\n\n1. Include all information, never miss anything.\n2. Try to focus in the optional schema.\n3. Each node or relation can have additional properties that identify that relation.\n4. Use the same language as the contextual text. Have a bias to '{language}'.\n\n---\n\n# Contextual Text\n{contextual_text}\n",
+      "llm_model": "gpt-4o",
+      "outputs": {
+        "override_global": {
+          "{extraction}": "{self.response}"
+        }
+      },
+      "name": "extractor",
+      "routes": [
+        {
+          "next_node": "get_graph",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "version": "1.0"
+}
