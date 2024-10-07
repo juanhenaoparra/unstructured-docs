@@ -10,47 +10,48 @@
       "llm_model": "gpt-4o",
       "outputs": {
         "override_global": {
-          "{res}": "{self.response.get_nodes_relations}"
+          "{res}": "{self.response.get_entities_relations}"
         }
       },
-      "system_prompt": "# Objective\n\nYou are going to extract the entities and relationships implicit in the Contextual Text. To be able to model it as a property graph.\n\nOptional schema:\n{optional_schema}\n\n---\n# Instructions\n\n1. Include all information, never miss anything.\n2. Try to focus in the optional schema.\n3. Each node or relation can have additional properties that identify that relation.\n4. Use the same language as the contextual text. Have a bias to '{language}'.\n\n---\n\n# Contextual Text\n{extraction}\n",
+      "system_prompt": "\n# Objective\n\nYou are going to extract the entities and relationships implicit in the Contextual Text. To be able to model it as a property graph.\n\nOptional schema:\n{optional_schema}\n\n---\n# Instructions\n\n1. Include all information, never miss anything.\n2. Try to focus in the optional schema.\n3. Each node or relation can have additional properties that identify that relation.\n4. Use the same language as the contextual text. Have a bias to '{language}'.\n\n---\n# Already extracted entities\n{identified_nodes}\n\n# Contextual Text\n{extraction}\n",
       "temperature": 0,
       "type": "llm",
       "tool_choice": {
         "function": {
-          "name": "get_nodes_relations"
+          "name": "get_entities_relations"
         },
         "type": "function"
       },
       "tools": [
         {
           "function": {
-            "description": "To extract the nodes and its relations from the contextual text",
-            "name": "get_nodes_relations",
+            "description": "Para extraer las nuevas entidades y nuevas sus relaciones del texto contextual evitando repetir lo que esta en 'already extracted entities'",
+            "name": "get_entities_relations",
+            "strict": true,
             "parameters": {
               "properties": {
-                "nodes": {
-                  "description": "The list of nodes and its details",
+                "entities": {
+                  "description": "La lista de entidades y sus relaciones",
                   "items": {
                     "properties": {
                       "type": {
                         "type": "string",
-                        "description": "The node type"
+                        "description": "El tipo de nodo"
                       },
-                      "node_id": {
+                      "entity_id": {
                         "type": "string",
-                        "description": "The node name in upper case and snake case"
+                        "description": "El nombre de nodo en mayuscula y con guiones bajos"
                       },
                       "props": {
-                        "description": "The list of properties that can be assigned to the node",
+                        "description": "La lista de propiedades que pueden ser asignadas para la relacion entre las dos entidades identificadas",
                         "items": {
                           "properties": {
                             "name": {
-                              "description": "The name of the property in lower case and snake case",
+                              "description": "El nombre de la propiedad en minuscula y con guiones bajos",
                               "type": "string"
                             },
                             "value": {
-                              "description": "The value of the property",
+                              "description": "El valor de la propiedad",
                               "type": "string"
                             }
                           },
@@ -58,6 +59,7 @@
                             "name",
                             "value"
                           ],
+                          "additionalProperties": false,
                           "type": "object"
                         },
                         "type": "array"
@@ -65,35 +67,48 @@
                     },
                     "required": [
                       "type",
-                      "node_id",
+                      "entity_id",
                       "props"
                     ],
+                    "additionalProperties": false,
                     "type": "object"
                   },
                   "type": "array"
                 },
                 "relations": {
-                  "description": "The list of relations between two nodes",
+                  "description": "La lista de relaciones entre dos nodos",
                   "items": {
                     "properties": {
-                      "from_node_id": {
+                      "type": {
                         "type": "string",
-                        "description": "The id origin node of the relation"
+                        "description": "El tipo de relacion en mayuscula y con guiones bajos"
                       },
-                      "to_node_id": {
+                      "from_entity_id": {
                         "type": "string",
-                        "description": "The destiny node of the relation"
+                        "description": "El id de la entidad origen de la relacion"
+                      },
+                      "from_entity_type": {
+                        "type": "string",
+                        "description": "El tipo de la entidad origen de la relacion"
+                      },
+                      "to_entity_id": {
+                        "type": "string",
+                        "description": "El id de la entidad destino de la relacion"
+                      },
+                      "to_entity_type": {
+                        "type": "string",
+                        "description": "El tipo de la entidad destino de la relacion"
                       },
                       "props": {
-                        "description": "The list of properties that can be assigned to the relation between the two nodes identified",
+                        "description": "La lista de propiedades que pueden ser asignadas para la relacion entre las dos entidades identificadas",
                         "items": {
                           "properties": {
                             "name": {
-                              "description": "The name of the property in lower case and snake case",
+                              "description": "El nombre de la propiedad en minuscula y con guiones bajos",
                               "type": "string"
                             },
                             "value": {
-                              "description": "The value of the property",
+                              "description": "El valor de la propiedad",
                               "type": "string"
                             }
                           },
@@ -101,25 +116,32 @@
                             "name",
                             "value"
                           ],
+                          "additionalProperties": false,
                           "type": "object"
                         },
                         "type": "array"
                       }
                     },
                     "required": [
-                      "from_node_id",
-                      "to_node_id",
+                      "from_entity_id",
+                      "from_entity_type",
+                      "to_entity_id",
+                      "to_entity_type",
+                      "type",
                       "props"
                     ],
+                    "additionalProperties": false,
                     "type": "object"
                   },
+                  "additionalProperties": false,
                   "type": "array"
                 }
               },
               "required": [
-                "nodes",
+                "entities",
                 "relations"
               ],
+              "additionalProperties": false,
               "type": "object"
             }
           },
@@ -143,7 +165,7 @@
     },
     {
       "type": "llm",
-      "system_prompt": "# Objective\n\nYou are going to extract the entities and relationships implicit in the Contextual Text. Use named entity recognition and pattern extraction to do it in a complete way.\n\nOptional schema:\n{optional_schema}\n\n---\n# Instructions\n\n1. Include all information, never miss anything.\n2. Try to focus in the optional schema.\n3. Each node or relation can have additional properties that identify that relation.\n4. Use the same language as the contextual text. Have a bias to '{language}'.\n\n---\n\n# Contextual Text\n{contextual_text}\n",
+      "system_prompt": "# Objective\n\nYou are going to extract the entities and relationships implicit in the Contextual Text. Use named entity recognition and pattern extraction to do it in a complete way.\n\nOptional schema:\n{optional_schema}\n\n---\n# Instructions\n\n1. Include all information, never miss anything.\n2. Focus in the optional schema. \n3. Each node or relation can have additional properties that identify that relation.\n4. For each entity include all properties identified\n5. Use the same language as the contextual text. Have a bias to '{language}'.\n6. You can check the already identified nodes and complement them or refer to them.\n7. Keep the entity ids the same.\n\n---\n\n# Already extracted entities\n{identified_nodes}\n\n# Contextual Text\n{contextual_text}\n\n",
       "llm_model": "gpt-4o",
       "outputs": {
         "override_global": {
