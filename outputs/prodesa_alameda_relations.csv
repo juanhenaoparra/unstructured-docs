@@ -1,12 +1,13 @@
 from_entity_id,to_entity_id,type,props
-CIUDAD_BARRANQUILLA,MACROPROYECTO_ALAMEDA_DEL_RIO,HAS,{'relacion': 'La ciudad de Barranquilla contiene el Macroproyecto Alameda del Rio.'}
-MACROPROYECTO_ALAMEDA_DEL_RIO,PROYECTO_PARDELA,HAS,{'relacion': 'El Macroproyecto Alameda del Rio contiene el Proyecto Pardela.'}
-PROYECTO_PARDELA,TIPO_APTO_TIPO_A,HAS,{'relacion': 'El Proyecto Pardela ofrece apartamentos del Tipo A.'}
-PROYECTO_PARDELA,TIPO_APTO_TIPO_B,HAS,{'relacion': 'El Proyecto Pardela ofrece apartamentos del Tipo B.'}
-PROYECTO_PARDELA,TIPO_APTO_TIPO_C,HAS,{'relacion': 'El Proyecto Pardela ofrece apartamentos del Tipo C.'}
-PROYECTO_PARDELA,TIPO_APTO_TIPO_D,HAS,{'relacion': 'El Proyecto Pardela ofrece apartamentos del Tipo D.'}
-PROYECTO_PARDELA,TIPO_APTO_TIPO_D1,HAS,{'relacion': 'El Proyecto Pardela ofrece apartamentos del Tipo D1.'}
-PROYECTO_PARDELA,TIPO_APTO_TIPO_D2,HAS,{'relacion': 'El Proyecto Pardela ofrece apartamentos del Tipo D2.'}
-PROYECTO_PARDELA,TIPO_APTO_TIPO_D3,HAS,{'relacion': 'El Proyecto Pardela ofrece apartamentos del Tipo D3.'}
-PROYECTO_PARDELA,TIPO_APTO_TIPO_D4,HAS,{'relacion': 'El Proyecto Pardela ofrece apartamentos del Tipo D4.'}
-PROYECTO_PARDELA,TIPO_APTO_TIPO_E,HAS,{'relacion': 'El Proyecto Pardela ofrece apartamentos del Tipo E.'}
+ALAMEDA_DEL_RIO,BARRANQUILLA,,"{'descripcion': 'El macroproyecto Alameda del Rio está ubicado en Barranquilla, Atlántico.', 'tipo_de_relacion': 'Macroproyecto ubicado en Ciudad'}"
+ALAMEDA_DEL_RIO,PARDELA,HAS,{}
+BARRANQUILLA,ALAMEDA_DEL_RIO,HAS,{}
+PARDELA,A,HAS,{}
+PARDELA,B,HAS,{}
+PARDELA,C,,{}
+PARDELA,D,HAS,{}
+PARDELA,D1,,{}
+PARDELA,D2,,{}
+PARDELA,D3,,{}
+PARDELA,D4,,{}
+PARDELA,E,,{}
