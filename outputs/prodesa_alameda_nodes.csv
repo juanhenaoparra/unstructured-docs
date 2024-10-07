@@ -1,0 +1,13 @@
+entity_id,type,props
+CIUDAD_BARRANQUILLA,CIUDAD,"{'nombre': 'Barranquilla', 'departamento': 'Atlántico'}"
+MACROPROYECTO_ALAMEDA_DEL_RIO,MACROPROYECTO,"{'nombre': 'Alameda del Rio', 'ubicacion': 'Predios de ""El Volador"", Avenida Circunvalar, entre carreras 38 y 46', 'caracteristicas': '92 hectáreas destinadas a espacio público, 89 hectáreas de vivienda, comercio y equipamientos, Capacidad para 22,000 familias, 50 hectáreas de parques, alamedas, andenes y ciclorrutas'}"
+PROYECTO_PARDELA,PROYECTO,"{'nombre': 'Pardela', 'localizacion': 'M-R14 del Macroproyecto Alameda del Rio', 'estrato_socio_economico': '3-4', 'area_construida_total': '61,358.83 m²', 'area_de_vivienda': '35,817.56 m²', 'unidades_de_vivienda': '510', 'torres': '4 (3 torres de 15 pisos con 8 apartamentos por piso, 1 torre de 15 pisos con 10 apartamentos por piso)', 'sistema_constructivo': 'Muros estructurales de concreto', 'altura_libre_torres_a_b_y_c': '2.50 mts', 'altura_libre_torre_d': '2.40 mts', 'edificio_de_porteria_y_servicios_comunales': '3 pisos', 'edificio_de_parqueos': '5 pisos en medios niveles, 1/2 semisótano', 'edificio_comunal': 'Ventilación natural, altura libre de 3.0 mts a 2.90 mts', 'edificio_de_piscina': '2 plantas, área de 321.92 m², servicios de piscina, sauna, gimnasio', 'cupos_de_parqueo_residentes': '568 cupos en total', 'cupos_de_parqueo_visitantes': '64 cupos en total', 'cupos_de_parqueo_motos': '41 cupos', 'proporcion_de_parqueaderos': '1 parqueadero cada 8 viviendas', 'cupos_de_parqueo_bicicletas': '122 cupos (21 cupos de parqueaderos para Discapacitados incluidos)'}"
+TIPO_APTO_TIPO_A,TIPO_APTO,"{'tipo': 'A', 'area': '80.0 m²', 'unidades': '180'}"
+TIPO_APTO_TIPO_B,TIPO_APTO,"{'tipo': 'B', 'area': '70.0 m²', 'unidades': '171'}"
+TIPO_APTO_TIPO_C,TIPO_APTO,"{'tipo': 'C', 'area_de_vivienda': '56.57 m²', 'area_de_terrazas': '5.02 m²', 'area_total': '61.59 m²', 'unidades': '9'}"
+TIPO_APTO_TIPO_D,TIPO_APTO,"{'tipo': 'D', 'area': '57.0 m²', 'unidades': '60'}"
+TIPO_APTO_TIPO_D1,TIPO_APTO,"{'tipo': 'D1', 'area_de_vivienda': '58.69 m²', 'area_de_terrazas': '0.00 m²', 'area_total': '58.69 m²', 'unidades': '30'}"
+TIPO_APTO_TIPO_D2,TIPO_APTO,"{'tipo': 'D2', 'area_de_vivienda': '58.89 m²', 'area_de_terrazas': '0.00 m²', 'area_total': '58.89 m²', 'unidades': '2'}"
+TIPO_APTO_TIPO_D3,TIPO_APTO,"{'tipo': 'D3', 'area_de_vivienda': '58.59 m²', 'area_de_terrazas': '0.00 m²', 'area_total': '58.59 m²', 'unidades': '28'}"
+TIPO_APTO_TIPO_D4,TIPO_APTO,"{'tipo': 'D4', 'area_de_vivienda': '58.77 m²', 'area_de_terrazas': '0.00 m²', 'area_total': '58.77 m²', 'unidades': '28'}"
+TIPO_APTO_TIPO_E,TIPO_APTO,"{'tipo': 'E', 'area_de_vivienda': '49.51 m²', 'area_de_terrazas': '0.00 m²', 'area_total': '49.51 m²', 'unidades': '2'}"
